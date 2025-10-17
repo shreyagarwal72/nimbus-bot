@@ -4,8 +4,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { ChatMessage } from "@/components/ChatMessage";
 import { ChatInput } from "@/components/ChatInput";
 import { TypingIndicator } from "@/components/TypingIndicator";
+import { ChatSidebar } from "@/components/ChatSidebar";
+import { SuggestionCards } from "@/components/SuggestionCards";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
-import { LogOut, Menu, Plus, Info, Bot } from "lucide-react";
+import { LogOut, Menu, Info, Cloud } from "lucide-react";
 import { toast } from "sonner";
 import { streamChat } from "@/lib/chatService";
 import { User, Session } from "@supabase/supabase-js";
@@ -70,9 +73,28 @@ const Chat = () => {
       if (error) throw error;
       setConversationId(data.id);
       setMessages([]);
+      setShowMobileMenu(false);
     } catch (error) {
       console.error("Error creating conversation:", error);
       toast.error("Failed to create new conversation");
+    }
+  };
+
+  const loadConversation = async (id: string) => {
+    try {
+      const { data, error } = await supabase
+        .from("messages")
+        .select("*")
+        .eq("conversation_id", id)
+        .order("created_at", { ascending: true });
+
+      if (error) throw error;
+      
+      setConversationId(id);
+      setMessages(data.map(msg => ({ role: msg.role as "user" | "assistant", content: msg.content })));
+    } catch (error) {
+      console.error("Error loading conversation:", error);
+      toast.error("Failed to load conversation");
     }
   };
 
@@ -142,84 +164,95 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => setShowMobileMenu(!showMobileMenu)}
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
-            <div className="flex items-center gap-2">
-              <Bot className="h-6 w-6 text-primary" />
-              <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                NimbusBot.ai
-              </h1>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={createNewConversation}
-              title="New chat"
-            >
-              <Plus className="h-5 w-5" />
-            </Button>
-            <Link to="/about">
-              <Button variant="ghost" size="icon" title="About">
-                <Info className="h-5 w-5" />
+    <div className="flex h-screen bg-background">
+      {/* Sidebar */}
+      {user && (
+        <ChatSidebar
+          userId={user.id}
+          currentConversationId={conversationId}
+          onSelectConversation={loadConversation}
+          onNewChat={createNewConversation}
+          isOpen={showMobileMenu}
+          onClose={() => setShowMobileMenu(false)}
+        />
+      )}
+
+      {/* Main Content */}
+      <div className="flex flex-col flex-1 h-screen">
+        {/* Header */}
+        <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+          <div className="px-4 h-16 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowMobileMenu(!showMobileMenu)}
+                title="Toggle menu"
+              >
+                <Menu className="h-5 w-5" />
               </Button>
-            </Link>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleSignOut}
-              title="Sign out"
-            >
-              <LogOut className="h-5 w-5" />
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      {/* Messages */}
-      <main className="flex-1 overflow-y-auto custom-scrollbar">
-        <div className="container mx-auto px-4 py-6 max-w-4xl">
-          {messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-center animate-fade-in">
-              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <Bot className="w-10 h-10 text-primary" />
+              <div className="flex items-center gap-2">
+                <Cloud className="h-6 w-6 text-primary" />
+                <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  NimbusBot.ai
+                </h1>
               </div>
-              <h2 className="text-2xl font-bold mb-2">Welcome to NimbusBot</h2>
-              <p className="text-muted-foreground max-w-md">
-                Start a conversation by typing a message below. I'm here to help with anything you need!
-              </p>
             </div>
-          ) : (
-            <>
-              {messages.map((message, index) => (
-                <ChatMessage key={index} role={message.role} content={message.content} />
-              ))}
-              {isLoading && <TypingIndicator />}
-              <div ref={messagesEndRef} />
-            </>
-          )}
-        </div>
-      </main>
+            
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <Link to="/about">
+                <Button variant="ghost" size="icon" title="About">
+                  <Info className="h-5 w-5" />
+                </Button>
+              </Link>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleSignOut}
+                title="Sign out"
+              >
+                <LogOut className="h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+        </header>
 
-      {/* Input */}
-      <footer className="border-t border-border bg-card/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4 max-w-4xl">
-          <ChatInput onSend={handleSendMessage} disabled={isLoading} />
-        </div>
-      </footer>
+        {/* Messages */}
+        <main className="flex-1 overflow-y-auto custom-scrollbar">
+          <div className="px-4 py-6 max-w-4xl mx-auto">
+            {messages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center text-center animate-fade-in pt-12">
+                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <Cloud className="w-10 h-10 text-primary" />
+                </div>
+                <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  Welcome to Nimbus AI
+                </h2>
+                <p className="text-muted-foreground max-w-md mb-6">
+                  Your intelligent assistant created by Vanshu Agarwal. How can I help you today?
+                </p>
+                <SuggestionCards onSelectSuggestion={handleSendMessage} />
+              </div>
+            ) : (
+              <>
+                {messages.map((message, index) => (
+                  <ChatMessage key={index} role={message.role} content={message.content} />
+                ))}
+                {isLoading && <TypingIndicator />}
+                <div ref={messagesEndRef} />
+              </>
+            )}
+          </div>
+        </main>
+
+        {/* Input */}
+        <footer className="border-t border-border bg-card/50 backdrop-blur-sm">
+          <div className="px-4 py-4 max-w-4xl mx-auto">
+            <ChatInput onSend={handleSendMessage} disabled={isLoading} />
+          </div>
+        </footer>
+      </div>
     </div>
   );
 };
