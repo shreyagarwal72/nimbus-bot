@@ -219,37 +219,38 @@ const Chat = () => {
         </header>
 
         {/* Messages */}
-        <main className="flex-1 overflow-y-auto custom-scrollbar">
-          <div className="px-4 py-6 max-w-4xl mx-auto">
-            {messages.length === 0 ? (
-              <div className="flex flex-col items-center justify-center text-center animate-fade-in pt-12">
-                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <Cloud className="w-10 h-10 text-primary" />
-                </div>
-                <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  Welcome to Nimbus AI
-                </h2>
-                <p className="text-muted-foreground max-w-md mb-6">
-                  Your intelligent assistant created by Vanshu Agarwal. How can I help you today?
-                </p>
-                <SuggestionCards onSelectSuggestion={handleSendMessage} />
+        <main className="flex-1 overflow-y-auto custom-scrollbar bg-background">
+          {messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center text-center animate-fade-in h-full px-4">
+              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-6 shadow-lg">
+                <Cloud className="w-8 h-8 text-white" />
               </div>
-            ) : (
-              <>
-                {messages.map((message, index) => (
-                  <ChatMessage key={index} role={message.role} content={message.content} />
-                ))}
-                {isLoading && <TypingIndicator />}
-                <div ref={messagesEndRef} />
-              </>
-            )}
-          </div>
+              <h1 className="text-4xl font-semibold mb-3 text-foreground">
+                Nimbus AI
+              </h1>
+              <p className="text-muted-foreground max-w-md mb-8 text-[15px]">
+                Your intelligent assistant created by Vanshu Agarwal. How can I help you today?
+              </p>
+              <SuggestionCards onSelectSuggestion={handleSendMessage} />
+            </div>
+          ) : (
+            <>
+              {messages.map((message, index) => (
+                <ChatMessage key={index} role={message.role} content={message.content} />
+              ))}
+              {isLoading && <TypingIndicator />}
+              <div ref={messagesEndRef} />
+            </>
+          )}
         </main>
 
         {/* Input */}
-        <footer className="border-t border-border bg-card/50 backdrop-blur-sm">
-          <div className="px-4 py-4 max-w-4xl mx-auto">
+        <footer className="border-t border-border bg-background">
+          <div className="px-4 py-4 max-w-3xl mx-auto">
             <ChatInput onSend={handleSendMessage} disabled={isLoading} />
+            <p className="text-xs text-muted-foreground text-center mt-3">
+              Nimbus AI can make mistakes. Consider checking important information.
+            </p>
           </div>
         </footer>
       </div>

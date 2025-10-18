@@ -8,96 +8,97 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* iOS-inspired design system */
-    --background: 0 0% 98%;
-    --foreground: 220 15% 20%;
+    /* Professional ChatGPT-like design system */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 13%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 20%;
+    --card-foreground: 0 0% 13%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 20%;
+    --popover-foreground: 0 0% 13%;
 
-    /* iOS Blue primary color */
-    --primary: 211 100% 50%;
+    /* Modern primary colors */
+    --primary: 142 71% 45%;
     --primary-foreground: 0 0% 100%;
 
-    /* Soft grays */
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 15% 20%;
+    /* Neutral grays for professional look */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 13%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 0 0% 97%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 280 70% 60%;
+    --accent: 142 71% 45%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 51%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 211 100% 50%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 142 71% 45%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(211 100% 50%), hsl(280 70% 60%));
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 14% 98%));
+    /* Professional gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(142 71% 45%), hsl(142 71% 35%));
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 98%));
     
-    /* Message bubbles */
-    --message-user: 211 100% 50%;
+    /* Message styling - ChatGPT inspired */
+    --message-user: 142 71% 45%;
     --message-user-foreground: 0 0% 100%;
-    --message-assistant: 220 14% 96%;
-    --message-assistant-foreground: 220 15% 20%;
+    --message-assistant: 0 0% 97%;
+    --message-assistant-foreground: 0 0% 13%;
 
-    /* Shadows */
-    --shadow-soft: 0 2px 8px hsl(220 15% 20% / 0.08);
-    --shadow-medium: 0 4px 16px hsl(220 15% 20% / 0.12);
-    --shadow-large: 0 8px 32px hsl(220 15% 20% / 0.16);
+    /* Professional shadows */
+    --shadow-soft: 0 1px 3px hsl(0 0% 0% / 0.05);
+    --shadow-medium: 0 2px 8px hsl(0 0% 0% / 0.08);
+    --shadow-large: 0 4px 16px hsl(0 0% 0% / 0.12);
 
-    /* Transitions */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Smooth transitions */
+    --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   .dark {
-    --background: 220 20% 12%;
-    --foreground: 220 10% 95%;
+    /* Professional dark mode - ChatGPT/Blackbox AI inspired */
+    --background: 0 0% 7%;
+    --foreground: 0 0% 95%;
 
-    --card: 220 18% 16%;
-    --card-foreground: 220 10% 95%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 220 18% 16%;
-    --popover-foreground: 220 10% 95%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 211 100% 55%;
+    --primary: 142 71% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 20%;
-    --secondary-foreground: 220 10% 95%;
+    --secondary: 0 0% 13%;
+    --secondary-foreground: 0 0% 95%;
 
-    --muted: 220 15% 20%;
-    --muted-foreground: 220 10% 65%;
+    --muted: 0 0% 13%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 280 70% 60%;
+    --accent: 142 71% 45%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 51%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 24%;
-    --input: 220 15% 24%;
-    --ring: 211 100% 55%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 142 71% 45%;
 
-    --message-user: 211 100% 55%;
+    --message-user: 142 71% 45%;
     --message-user-foreground: 0 0% 100%;
-    --message-assistant: 220 15% 20%;
-    --message-assistant-foreground: 220 10% 95%;
+    --message-assistant: 0 0% 13%;
+    --message-assistant-foreground: 0 0% 95%;
 
-    --shadow-soft: 0 2px 8px hsl(0 0% 0% / 0.3);
-    --shadow-medium: 0 4px 16px hsl(0 0% 0% / 0.4);
-    --shadow-large: 0 8px 32px hsl(0 0% 0% / 0.5);
+    --shadow-soft: 0 1px 3px hsl(0 0% 0% / 0.4);
+    --shadow-medium: 0 2px 8px hsl(0 0% 0% / 0.5);
+    --shadow-large: 0 4px 16px hsl(0 0% 0% / 0.6);
   }
 }
 

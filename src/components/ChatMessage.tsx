@@ -1,4 +1,4 @@
-import { Bot, User } from "lucide-react";
+import { Sparkles, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ChatMessageProps {
@@ -12,31 +12,26 @@ export const ChatMessage = ({ role, content }: ChatMessageProps) => {
   return (
     <div
       className={cn(
-        "flex gap-3 mb-4 animate-slide-in-up",
-        isUser && "flex-row-reverse"
+        "group w-full py-6 px-4 animate-slide-in-up transition-colors hover:bg-muted/30",
+        isUser ? "bg-transparent" : "bg-muted/10"
       )}
     >
-      <div
-        className={cn(
-          "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center",
-          isUser
-            ? "bg-primary text-primary-foreground"
-            : "bg-secondary text-secondary-foreground"
-        )}
-      >
-        {isUser ? <User className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
-      </div>
-      <div
-        className={cn(
-          "max-w-[70%] rounded-2xl px-4 py-2 shadow-sm",
-          isUser
-            ? "bg-primary text-primary-foreground"
-            : "bg-secondary text-secondary-foreground"
-        )}
-      >
-        <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
-          {content}
-        </p>
+      <div className="max-w-3xl mx-auto flex gap-4">
+        <div
+          className={cn(
+            "flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center font-semibold text-sm",
+            isUser
+              ? "bg-primary text-primary-foreground"
+              : "bg-accent text-accent-foreground"
+          )}
+        >
+          {isUser ? <User className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
+        </div>
+        <div className="flex-1 min-w-0 pt-1">
+          <p className="text-[15px] leading-7 whitespace-pre-wrap break-words text-foreground">
+            {content}
+          </p>
+        </div>
       </div>
     </div>
   );
