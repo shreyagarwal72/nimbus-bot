@@ -26,7 +26,7 @@ const Auth = () => {
         setSession(session);
         setUser(session?.user ?? null);
         if (session) {
-          navigate("/");
+          navigate("/chat");
         }
       }
     );
@@ -36,7 +36,7 @@ const Auth = () => {
       setSession(session);
       setUser(session?.user ?? null);
       if (session) {
-        navigate("/");
+        navigate("/chat");
       }
     });
 
@@ -64,7 +64,7 @@ const Auth = () => {
           toast.success("Welcome back!");
         }
       } else {
-        const redirectUrl = `${window.location.origin}/`;
+        const redirectUrl = `${window.location.origin}/chat`;
         
         const { error } = await supabase.auth.signUp({
           email,

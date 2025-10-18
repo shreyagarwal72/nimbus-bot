@@ -72,8 +72,9 @@ const Chat = () => {
 
       if (error) throw error;
       setConversationId(data.id);
-      setMessages([]);
+      setMessages([]); // Clear messages for new chat
       setShowMobileMenu(false);
+      toast.success("New chat started");
     } catch (error) {
       console.error("Error creating conversation:", error);
       toast.error("Failed to create new conversation");
@@ -173,7 +174,7 @@ const Chat = () => {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    navigate("/auth");
+    navigate("/");
   };
 
   return (
