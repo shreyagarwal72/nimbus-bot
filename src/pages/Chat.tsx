@@ -123,6 +123,19 @@ const Chat = () => {
     await saveMessage("user", content);
     setIsLoading(true);
 
+    // Auto-generate conversation title from first message
+    if (messages.length === 0) {
+      const title = content.length > 50 ? content.substring(0, 50) + "..." : content;
+      try {
+        await supabase
+          .from("conversations")
+          .update({ title })
+          .eq("id", conversationId);
+      } catch (error) {
+        console.error("Error updating conversation title:", error);
+      }
+    }
+
     let assistantContent = "";
     const upsertAssistant = (chunk: string) => {
       assistantContent += chunk;
