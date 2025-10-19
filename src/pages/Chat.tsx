@@ -53,9 +53,37 @@ const Chat = () => {
 
   useEffect(() => {
     if (user) {
-      createNewConversation();
+      loadOrCreateConversation();
     }
   }, [user]);
+
+  const loadOrCreateConversation = async () => {
+    if (!user) return;
+
+    try {
+      // First, try to load the most recent conversation
+      const { data: recentConversation, error: fetchError } = await supabase
+        .from("conversations")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (fetchError) throw fetchError;
+
+      if (recentConversation) {
+        // Load existing conversation
+        await loadConversation(recentConversation.id);
+      } else {
+        // No conversations exist, create first one
+        await createNewConversation();
+      }
+    } catch (error) {
+      console.error("Error loading conversation:", error);
+      toast.error("Failed to load conversation");
+    }
+  };
 
   const createNewConversation = async () => {
     if (!user) return;
