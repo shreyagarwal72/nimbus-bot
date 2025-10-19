@@ -195,38 +195,40 @@ const Chat = () => {
       <div className="flex flex-col flex-1 h-screen">
         {/* Header */}
         <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-          <div className="px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <div className="px-3 sm:px-4 h-14 sm:h-16 flex items-center justify-between">
+            <div className="flex items-center gap-2 sm:gap-3">
               <Button
                 variant="ghost"
                 size="icon"
+                className="h-8 w-8 sm:h-10 sm:w-10"
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
                 title="Toggle menu"
               >
-                <Menu className="h-5 w-5" />
+                <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
-              <div className="flex items-center gap-2">
-                <Cloud className="h-6 w-6 text-primary" />
-                <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <Cloud className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                <h1 className="text-base sm:text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                   NimbusBot.ai
                 </h1>
               </div>
             </div>
             
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               <ThemeToggle />
               <Link to="/about">
-                <Button variant="ghost" size="icon" title="About">
-                  <Info className="h-5 w-5" />
+                <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10" title="About">
+                  <Info className="h-4 w-4 sm:h-5 sm:w-5" />
                 </Button>
               </Link>
               <Button
                 variant="ghost"
                 size="icon"
+                className="h-8 w-8 sm:h-10 sm:w-10"
                 onClick={handleSignOut}
                 title="Sign out"
               >
-                <LogOut className="h-5 w-5" />
+                <LogOut className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
             </div>
           </div>
@@ -236,13 +238,13 @@ const Chat = () => {
         <main className="flex-1 overflow-y-auto custom-scrollbar bg-background">
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-center animate-fade-in h-full px-4">
-              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-6 shadow-lg">
-                <Cloud className="w-8 h-8 text-white" />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-4 sm:mb-6 shadow-lg">
+                <Cloud className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
-              <h1 className="text-4xl font-semibold mb-3 text-foreground">
+              <h1 className="text-2xl sm:text-4xl font-semibold mb-2 sm:mb-3 text-foreground">
                 Nimbus AI
               </h1>
-              <p className="text-muted-foreground max-w-md mb-8 text-[15px]">
+              <p className="text-muted-foreground max-w-md mb-6 sm:mb-8 text-sm sm:text-[15px]">
                 Your intelligent assistant created by Vanshu Agarwal. How can I help you today?
               </p>
               <SuggestionCards onSelectSuggestion={handleSendMessage} />
@@ -259,10 +261,10 @@ const Chat = () => {
         </main>
 
         {/* Input */}
-        <footer className="border-t border-border bg-background">
-          <div className="px-4 py-4 max-w-3xl mx-auto">
+        <footer className="border-t border-border bg-background safe-bottom">
+          <div className="px-3 sm:px-4 py-3 sm:py-4 max-w-3xl mx-auto">
             <ChatInput onSend={handleSendMessage} disabled={isLoading} />
-            <p className="text-xs text-muted-foreground text-center mt-3">
+            <p className="text-xs text-muted-foreground text-center mt-2 sm:mt-3">
               Nimbus AI can make mistakes. Consider checking important information.
             </p>
           </div>
